@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to the pvlib Python Package</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    
+    <!-- Fonts & Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css">
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="nav-bar">
+        <div class="logo">pvlib</div>
+        <div class="nav-links">
+            <a href="#page-1">Home</a>
+            <a href="#page-1a">Solar Basics</a>
+            <a href="#page-2">About pvlib</a>
+            <a href="#page-5">Features</a>
+            <a href="#page-9">Live Demo</a>
+            <a href="#page-10">3D PV Model</a>
+            <a href="#page-12">Community</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Page 1: Title -->
+        <section class="page" id="page-1">
+            <div class="title-slide">
+                <div class="title-background">
+                    <!-- Geometric patterns -->
+                    <div class="geometric-bg">
+                        <div class="hexagon"></div>
+                        <div class="hexagon"></div>
+                    </div>
+                </div>
+                
+                <div class="title-content">
+                    <div class="logo-section">
+                        <div class="pvlib-logo">
+                            <span class="logo-pv">pv</span><span class="logo-lib">lib</span>
+                        </div>
+                    </div>
+                    
+                    <h1 class="main-title">
+                        <span class="title-line-1">Introduction to the</span>
+                        <span class="title-line-2">pvlib Python Package</span>
+                    </h1>
+                    
+                    <h2 class="subtitle">
+                        Solar Energy Modeling with Python
+                    </h2>
+                    
+                    <div class="institution-card">
+                        <div class="institution-header">
+                            <div class="institution-info">
+                                <h3>SPREE UNSW</h3>
+                                <p>School of Photovoltaic and Renewable Energy Engineering</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="title-features">
+                        <div class="feature-tag">
+                            <span>Python Package</span>
+                        </div>
+                        <div class="feature-tag">
+                            <span>Open Source</span>
+                        </div>
+                        <div class="feature-tag">
+                            <span>Research Grade</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Enhanced SVG visualization -->
+                <div class="title-visualization">
+                    <svg viewBox="0 0 600 300" class="title-svg">
+                        <defs>
+                            <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#FFD700"/>
+                                <stop offset="100%" style="stop-color:#FF8C00"/>
+                            </linearGradient>
+                            <linearGradient id="panelGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#1976D2"/>
+                                <stop offset="100%" style="stop-color:#0D47A1"/>
+                            </linearGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                <feMerge> 
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Animated sun -->
+                        <circle cx="100" cy="80" r="25" fill="url(#sunGradient)" filter="url(#glow)">
+                            <animate attributeName="cy" values="80;60;80" dur="4s" repeatCount="indefinite"/>
+                        </circle>
+                        
+                        <!-- Sun rays -->
+                        <g stroke="#FFD700" stroke-width="3" opacity="0.7">
+                            <line x1="100" y1="40" x2="100" y2="20">
+                                <animateTransform attributeName="transform" type="rotate" 
+                                    values="0 100 80;360 100 80" dur="8s" repeatCount="indefinite"/>
+                            </line>
+                            <line x1="140" y1="80" x2="160" y2="80">
+                                <animateTransform attributeName="transform" type="rotate" 
+                                    values="0 100 80;360 100 80" dur="8s" repeatCount="indefinite"/>
+                            </line>
+                            <line x1="100" y1="120" x2="100" y2="140">
+                                <animateTransform attributeName="transform" type="rotate" 
+                                    values="0 100 80;360 100 80" dur="8s" repeatCount="indefinite"/>
+                            </line>
+                            <line x1="60" y1="80" x2="40" y2="80">
+                                <animateTransform attributeName="transform" type="rotate" 
+                                    values="0 100 80;360 100 80" dur="8s" repeatCount="indefinite"/>
+                            </line>
+                        </g>
+                        
+                        <!-- Energy flow arrows -->
+                        <g stroke="#4CAF50" stroke-width="4" fill="none" opacity="0.8">
+                            <path d="M 130 90 Q 200 120 280 150" marker-end="url(#arrowhead)">
+                                <animate attributeName="stroke-dasharray" values="0,1000;1000,0" dur="3s" repeatCount="indefinite"/>
+                            </path>
+                        </g>
+                        
+                        <!-- Solar panel array -->
+                        <g transform="translate(300,140)">
+                            <rect x="0" y="0" width="80" height="40" fill="url(#panelGradient)" rx="5" stroke="#0D47A1" stroke-width="2"/>
+                            <rect x="90" y="0" width="80" height="40" fill="url(#panelGradient)" rx="5" stroke="#0D47A1" stroke-width="2"/>
+                            <rect x="180" y="0" width="80" height="40" fill="url(#panelGradient)" rx="5" stroke="#0D47A1" stroke-width="2"/>
+                            
+                            <!-- Panel details -->
+                            <g stroke="#0D47A1" stroke-width="1" opacity="0.7">
+                                <line x1="20" y1="0" x2="20" y2="40"/>
+                                <line x1="40" y1="0" x2="40" y2="40"/>
+                                <line x1="60" y1="0" x2="60" y2="40"/>
+                                <line x1="110" y1="0" x2="110" y2="40"/>
+                                <line x1="130" y1="0" x2="130" y2="40"/>
+                                <line x1="150" y1="0" x2="150" y2="40"/>
+                                <line x1="200" y1="0" x2="200" y2="40"/>
+                                <line x1="220" y1="0" x2="220" y2="40"/>
+                                <line x1="240" y1="0" x2="240" y2="40"/>
+                            </g>
+                        </g>
+                        
+                        <!-- Power output visualization -->
+                        <g transform="translate(450,200)">
+                            <rect x="0" y="0" width="100" height="60" fill="#4CAF50" rx="10" opacity="0.2"/>
+                            <text x="50" y="35" text-anchor="middle" font-size="14" fill="#4CAF50" font-weight="bold">POWER</text>
+                            <rect x="10" y="45" width="80" height="8" fill="#E0E0E0" rx="4"/>
+                            <rect x="10" y="45" width="0" height="8" fill="#4CAF50" rx="4">
+                                <animate attributeName="width" values="0;80;60;80" dur="4s" repeatCount="indefinite"/>
+                            </rect>
+                        </g>
+                        
+                        <!-- Arrow marker -->
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#4CAF50"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
+            </div>
+            <div class="navigation" style="justify-content: center;">
+                <a href="#page-1a" class="nav-button">Begin Exploration <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Page 1a: Solar Energy Fundamentals -->
+        <section class="page" id="page-1a">
+            <div class="page-header"><h2>Solar Energy: The Foundation</h2></div>
+            <div class="solar-fundamentals">
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <div class="concept-icon">☀️</div>
+                        <h3>Solar Irradiance</h3>
+                        <p>The power per unit area from the sun that hits a surface. Measured in watts per square meter (W/m²).</p>
+                        <div class="visual-demo">
+                            <svg viewBox="0 0 200 120" class="mini-diagram">
+                                <defs>
+                                    <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#ffeb3b"/>
+                                        <stop offset="100%" style="stop-color:#ff9800"/>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="30" cy="30" r="20" fill="url(#sunGrad)"/>
+                                <g stroke="#ffc107" stroke-width="2">
+                                    <line x1="50" y1="30" x2="170" y2="30"/>
+                                    <line x1="55" y1="25" x2="175" y2="25"/>
+                                    <line x1="55" y1="35" x2="175" y2="35"/>
+                                </g>
+                                <rect x="160" y="20" width="30" height="20" fill="#1976d2" stroke="#0d47a1"/>
+                                <text x="175" y="55" text-anchor="middle" font-size="10" fill="#333">Solar Panel</text>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <div class="concept-icon">🌤️</div>
+                        <h3>Weather Impact</h3>
+                        <p>Clouds, temperature, and atmospheric conditions significantly affect solar panel performance.</p>
+                        <div class="weather-impact-chart">
+                            <div class="weather-bar">
+                                <span>Clear Sky</span>
+                                <div class="bar" style="width: 100%; background: #4caf50;"></div>
+                                <span>100%</span>
+                            </div>
+                            <div class="weather-bar">
+                                <span>Partly Cloudy</span>
+                                <div class="bar" style="width: 70%; background: #ff9800;"></div>
+                                <span>70%</span>
+                            </div>
+                            <div class="weather-bar">
+                                <span>Overcast</span>
+                                <div class="bar" style="width: 30%; background: #f44336;"></div>
+                                <span>30%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <div class="concept-icon">📐</div>
+                        <h3>Panel Positioning</h3>
+                        <p>Tilt angle and azimuth direction optimize energy capture throughout the year.</p>
+                        <div class="positioning-demo">
+                            <svg viewBox="0 0 200 100" class="positioning-svg">
+                                <g id="panel-demo">
+                                    <line x1="20" y1="80" x2="180" y2="80" stroke="#8bc34a" stroke-width="2"/>
+                                    <text x="100" y="95" text-anchor="middle" font-size="10" fill="#666">Ground</text>
+                                    <g transform="rotate(-30 100 70)">
+                                        <rect x="60" y="65" width="80" height="10" fill="#1976d2" stroke="#0d47a1"/>
+                                        <text x="100" y="50" text-anchor="middle" font-size="8" fill="#333">Optimal Tilt</text>
+                                    </g>
+                                    <path d="M 50 30 L 150 30" stroke="#ffc107" stroke-width="3" marker-end="url(#arrowhead)"/>
+                                    <text x="100" y="25" text-anchor="middle" font-size="10" fill="#ff9800">Sun Rays</text>
+                                </g>
+                                <defs>
+                                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                        <polygon points="0 0, 10 3.5, 0 7" fill="#ffc107"/>
+                                    </marker>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <div class="concept-icon">⚡</div>
+                        <h3>Power Generation</h3>
+                        <p>Solar panels convert sunlight into electrical energy through the photovoltaic effect.</p>
+                        <div class="power-flow">
+                            <div class="flow-step">
+                                <div class="step-icon">☀️</div>
+                                <div class="step-label">Sunlight</div>
+                            </div>
+                            <div class="arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-icon">📱</div>
+                                <div class="step-label">Solar Cell</div>
+                            </div>
+                            <div class="arrow">→</div>
+                            <div class="flow-step">
+                                <div class="step-icon">⚡</div>
+                                <div class="step-label">Electricity</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="key-insight">
+                    <h3>💡 Key Insight</h3>
+                    <p>Accurate solar energy prediction requires complex modeling of weather patterns, panel positioning, and system components. This is where <strong>pvlib</strong> becomes essential!</p>
+                </div>
+            </div>
+            <div class="navigation">
+                <a href="#page-1" class="nav-button"><i class="fas fa-arrow-left"></i> Cover</a>
+                <a href="#page-2" class="nav-button">What is pvlib? <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Page 2: What is pvlib? -->
+        <section class="page" id="page-2">
+            <div class="page-header"><h2>What is pvlib?</h2></div>
+            <div class="two-columns">
+                <div>
+                    <h3>A powerful, open-source toolbox for solar energy simulation.</h3>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">⚡</div>
+                            <div class="feature-content">
+                                <h4>High Accuracy Simulation</h4>
+                                <p>Simulates photovoltaic (PV) energy systems with validated, peer-reviewed models.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎯</div>
+                            <div class="feature-content">
+                                <h4>Reliable Benchmarking</h4>
+                                <p>Provides standardized models for solar resource assessment and energy forecasting.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌍</div>
+                            <div class="feature-content">
+                                <h4>Global Community</h4>
+                                <p>Trusted by thousands of researchers and engineers worldwide.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🔬</div>
+                            <div class="feature-content">
+                                <h4>Research Grade</h4>
+                                <p>Used in academic research, commercial projects, and policy development.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="solar-simulation-container">
+                    <h4 style="text-align: center; margin-bottom: 20px;">Interactive Solar Simulation</h4>
+                    <div id="interactive-solar-panel">
+                        <svg viewBox="0 0 400 300" id="solar-panel-svg">
+                            <!-- Sky gradient background -->
+                            <defs>
+                                <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#87CEEB"/>
+                                    <stop offset="100%" style="stop-color:#E0F6FF"/>
+                                </linearGradient>
+                                <linearGradient id="panelGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#1565C0"/>
+                                    <stop offset="100%" style="stop-color:#0D47A1"/>
+                                </linearGradient>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                    <feMerge> 
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            
+                            <!-- Background -->
+                            <rect width="400" height="300" fill="url(#skyGradient)"/>
+                            
+                            <!-- Ground -->
+                            <rect x="0" y="250" width="400" height="50" fill="#8BC34A"/>
+                            
+                            <!-- Sun -->
+                            <circle id="sun" cx="80" cy="60" r="25" fill="#FFC107" filter="url(#glow)">
+                                <animate attributeName="cx" values="80;320;80" dur="8s" repeatCount="indefinite"/>
+                                <animate attributeName="cy" values="60;40;60" dur="8s" repeatCount="indefinite"/>
+                            </circle>
+                            
+                            <!-- Sun rays -->
+                            <g id="sun-rays" stroke="#FFD54F" stroke-width="2" opacity="0.7">
+                                <line x1="50" y1="30" x2="40" y2="20">
+                                    <animateTransform attributeName="transform" type="rotate" 
+                                        values="0 80 60;360 80 60" dur="4s" repeatCount="indefinite"/>
+                                </line>
+                                <line x1="110" y1="30" x2="120" y2="20">
+                                    <animateTransform attributeName="transform" type="rotate" 
+                                        values="0 80 60;360 80 60" dur="4s" repeatCount="indefinite"/>
+                                </line>
+                                <line x1="50" y1="90" x2="40" y2="100">
+                                    <animateTransform attributeName="transform" type="rotate" 
+                                        values="0 80 60;360 80 60" dur="4s" repeatCount="indefinite"/>
+                                </line>
+                                <line x1="110" y1="90" x2="120" y2="100">
+                                    <animateTransform attributeName="transform" type="rotate" 
+                                        values="0 80 60;360 80 60" dur="4s" repeatCount="indefinite"/>
+                                </line>
+                            </g>
+                            
+                            <!-- Solar panel -->
+                            <g id="solar-panel">
+                                <rect x="150" y="180" width="100" height="60" fill="url(#panelGradient)" 
+                                      stroke="#0D47A1" stroke-width="2" rx="5"/>
+                                <!-- Panel grid -->
+                                <line x1="175" y1="180" x2="175" y2="240" stroke="#0D47A1" stroke-width="1"/>
+                                <line x1="200" y1="180" x2="200" y2="240" stroke="#0D47A1" stroke-width="1"/>
+                                <line x1="225" y1="180" x2="225" y2="240" stroke="#0D47A1" stroke-width="1"/>
+                                <line x1="150" y1="200" x2="250" y2="200" stroke="#0D47A1" stroke-width="1"/>
+                                <line x1="150" y1="220" x2="250" y2="220" stroke="#0D47A1" stroke-width="1"/>
+                            </g>
+                            
+                            <!-- Irradiance rays hitting tilted panel at better angle -->
+                            <g id="irradiance-rays" stroke="#FFC107" stroke-width="3" opacity="0">
+                                <line x1="80" y1="85" x2="160" y2="180">
+                                    <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+                                </line>
+                                <line x1="80" y1="85" x2="190" y2="185">
+                                    <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.3s" repeatCount="indefinite"/>
+                                </line>
+                                <line x1="80" y1="85" x2="220" y2="190">
+                                    <animate attributeName="opacity" values="0;1;0" dur="2s" begin="0.6s" repeatCount="indefinite"/>
+                                </line>
+                            </g>
+                            
+                            <!-- Power output visualization -->
+                            <g id="power-output">
+                                <text x="260" y="200" font-family="Arial" font-size="12" fill="#333">Power Output:</text>
+                                <rect x="260" y="210" width="80" height="15" fill="#E0E0E0" stroke="#999" rx="7"/>
+                                <rect x="260" y="210" width="0" height="15" fill="#4CAF50" rx="7">
+                                    <animate attributeName="width" values="20;70;50;80;60;40;20" dur="8s" repeatCount="indefinite"/>
+                                </rect>
+                                <text x="300" y="240" font-family="Arial" font-size="10" fill="#666" text-anchor="middle">
+                                    <animate>Variable with sun position</animate>
+                                </text>
+                            </g>
+                            
+                            <!-- Cloud that occasionally blocks sun -->
+                            <ellipse id="cloud" cx="-50" cy="80" rx="30" ry="15" fill="white" opacity="0.8">
+                                <animate attributeName="cx" values="-50;450" dur="12s" repeatCount="indefinite"/>
+                            </ellipse>
+                        </svg>
+                    </div>
+                    <div class="simulation-controls">
+                        <p><strong>What you're seeing:</strong></p>
+                        <ul>
+                            <li>☀️ Sun position affects irradiance angle and intensity</li>
+                            <li>⚡ Power output varies throughout the day</li>
+                            <li>☁️ Clouds can temporarily reduce performance</li>
+                            <li>📊 pvlib models all these factors precisely</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <a href="#page-1a" class="nav-button"><i class="fas fa-arrow-left"></i> Solar Basics</a>
+                <a href="#page-3" class="nav-button">History <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Page 3: History -->
+        <section class="page" id="page-3">
+            <div class="page-header"><h2>A Brief History</h2></div>
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>2013: The Genesis</h3>
+                        <p>The Python version of pvlib began, porting functionality from the original MATLAB version developed at Sandia National Laboratories.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h3>2015: Public Debut</h3>
+                        <p>First official release on PyPI, making it accessible to the global Python community and sparking its growth.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>Present Day: Industry Standard</h3>
+                        <p>A top-tier scientific package, ranking in the top 1% on PyPI by downloads and supported by NumFOCUS and a global community of over 100 contributors.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <a href="#page-2" class="nav-button"><i class="fas fa-arrow-left"></i> About</a>
+                <a href="#page-4" class="nav-button">Why pvlib? <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Page 4: Why use pvlib? -->
+        <section class="page" id="page-4">
+            <div class="page-header"><h2>Why Use pvlib?</h2></div>
+            <ul>
+                <li><strong>Open and Flexible:</strong> Transparent models allow for custom, in-depth analysis and research.</li>
+                <li><strong>Standardized and Validated:</strong> A common repository for published and validated modeling algorithms.</li>
+                <li><strong>Community Driven:</strong> Continuously improved by a large and active user base from around the world.</li>
+                <li><strong>Comprehensive:</strong> A wide range of functions for detailed PV system performance modeling.</li>
+            </ul>
+            <div class="card">
+                <div class="interactive-buttons" style="text-align:center;">
+                    <button data-target="researchers">For Researchers</button>
+                    <button data-target="engineers">For Engineers</button>
+                    <button data-target="students">For Students</button>
+                </div>
+                <div id="researchers" class="testimonial"><p>'pvlib allows me to easily compare my novel irradiance model against established benchmarks, saving months of work.'</p></div>
+                <div id="engineers" class="testimonial"><p>'I rely on pvlib for bankable energy yield assessments of utility-scale solar farms. It's the industry standard.'</p></div>
+                <div id="students" class="testimonial"><p>'It's an incredible tool for learning the fundamentals of PV system performance. The documentation is fantastic.'</p></div>
+            </div>
+            <div class="navigation">
+                <a href="#page-3" class="nav-button"><i class="fas fa-arrow-left"></i> History</a>
+                <a href="#page-5" class="nav-button">Core Features <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Page 5: Core Functionality -->
+        <section class="page" id="page-5">
+            <div class="page-header"><h2>The "Weather-to-Power" Chain</h2></div>
+            <div class="weather-to-power-explanation">
+                <p class="intro-text">pvlib transforms weather data into precise power predictions through a sophisticated modeling pipeline. Here's how it works:</p>
+                
+                <div class="process-chain">
+                    <div class="process-step" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-visual">
+                            <svg viewBox="0 0 120 120" class="step-svg">
+                                <defs>
+                                    <radialGradient id="weatherGrad" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" style="stop-color:#FFD54F"/>
+                                        <stop offset="70%" style="stop-color:#FF9800"/>
+                                        <stop offset="100%" style="stop-color:#F57C00"/>
+                                    </radialGradient>
+                                </defs>
+                                <circle cx="60" cy="60" r="40" fill="url(#weatherGrad)"/>
+                                <g stroke="#FFF" stroke-width="3" opacity="0.8">
+                                    <line x1="60" y1="10" x2="60" y2="25"/>
+                                    <line x1="100" y1="60" x2="115" y2="60"/>
+                                    <line x1="60" y1="110" x2="60" y2="95"/>
+                                    <line x1="5" y1="60" x2="20" y2="60"/>
+                                    <line x1="90" y1="30" x2="100" y2="20"/>
+                                    <line x1="90" y1="90" x2="100" y2="100"/>
+                                    <line x1="30" y1="90" x2="20" y2="100"/>
+                                    <line x1="30" y1="30" x2="20" y2="20"/>
+                                </g>
+                                <text x="60" y="68" text-anchor="middle" font-size="14" fill="white" font-weight="bold">GHI</text>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h3>Weather Data Input</h3>
+                            <p><strong>Global Horizontal Irradiance (GHI)</strong>, temperature, wind speed, and humidity from weather stations or satellite data.</p>
+                            <div class="step-details">
+                                <span class="detail-tag">Sources:</span> NSRDB, PVGIS, TMY files
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="process-arrow">→</div>
+
+                    <div class="process-step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-visual">
+                            <svg viewBox="0 0 120 120" class="step-svg">
+                                <defs>
+                                    <linearGradient id="solarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#2196F3"/>
+                                        <stop offset="100%" style="stop-color:#1976D2"/>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="60" cy="30" r="15" fill="#FFD54F"/>
+                                <g stroke="#FFD54F" stroke-width="2">
+                                    <line x1="60" y1="45" x2="60" y2="80"/>
+                                    <line x1="45" y1="60" x2="75" y2="60"/>
+                                    <line x1="50" y1="70" x2="70" y2="70"/>
+                                </g>
+                                <text x="60" y="100" text-anchor="middle" font-size="10" fill="#333">Solar Position</text>
+                                <text x="20" y="50" font-size="8" fill="#666">Azimuth</text>
+                                <text x="80" y="85" font-size="8" fill="#666">Elevation</text>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h3>Solar Position</h3>
+                            <p>Calculate precise <strong>sun position</strong> (azimuth, elevation) for any location and time using astronomical algorithms.</p>
+                            <div class="step-details">
+                                <span class="detail-tag">Algorithms:</span> SPA, NREL, PSA
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="process-arrow">→</div>
+
+                    <div class="process-step" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-visual">
+                            <svg viewBox="0 0 120 120" class="step-svg">
+                                <defs>
+                                    <linearGradient id="planeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#4CAF50"/>
+                                        <stop offset="100%" style="stop-color:#2E7D32"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect x="20" y="40" width="80" height="40" fill="url(#planeGrad)" transform="rotate(-15 60 60)"/>
+                                <g stroke="#FF9800" stroke-width="2">
+                                    <line x1="30" y1="20" x2="45" y2="35"/>
+                                    <line x1="50" y1="20" x2="65" y2="35"/>
+                                    <line x1="70" y1="20" x2="85" y2="35"/>
+                                </g>
+                                <text x="60" y="100" text-anchor="middle" font-size="10" fill="#333">POA Irradiance</text>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h3>Irradiance Transposition</h3>
+                            <p>Convert GHI to <strong>Plane-of-Array (POA)</strong> irradiance accounting for panel tilt, orientation, and diffuse/direct components.</p>
+                            <div class="step-details">
+                                <span class="detail-tag">Models:</span> Hay-Davies, Perez, Isotropic
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="process-arrow">→</div>
+
+                    <div class="process-step" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-visual">
+                            <svg viewBox="0 0 120 120" class="step-svg">
+                                <defs>
+                                    <linearGradient id="cellGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#1976D2"/>
+                                        <stop offset="100%" style="stop-color:#0D47A1"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect x="30" y="30" width="60" height="60" fill="url(#cellGrad)" rx="5"/>
+                                <g stroke="#0D47A1" stroke-width="1">
+                                    <line x1="45" y1="30" x2="45" y2="90"/>
+                                    <line x1="60" y1="30" x2="60" y2="90"/>
+                                    <line x1="75" y1="30" x2="75" y2="90"/>
+                                    <line x1="30" y1="45" x2="90" y2="45"/>
+                                    <line x1="30" y1="60" x2="90" y2="60"/>
+                                    <line x1="30" y1="75" x2="90" y2="75"/>
+                                </g>
+                                <text x="60" y="105" text-anchor="middle" font-size="10" fill="#333">Cell Temp</text>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h3>Cell Temperature</h3>
+                            <p>Estimate <strong>cell temperature</strong> from ambient conditions, as it significantly affects module efficiency.</p>
+                            <div class="step-details">
+                                <span class="detail-tag">Models:</span> SAPM, Pvsyst, Faiman
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="process-arrow">→</div>
+
+                    <div class="process-step" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-visual">
+                            <svg viewBox="0 0 120 120" class="step-svg">
+                                <defs>
+                                    <linearGradient id="powerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#FF5722"/>
+                                        <stop offset="100%" style="stop-color:#D32F2F"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect x="20" y="50" width="80" height="20" fill="url(#powerGrad)" rx="10"/>
+                                <circle cx="25" cy="45" r="3" fill="#4CAF50"/>
+                                <circle cx="35" cy="45" r="3" fill="#4CAF50"/>
+                                <circle cx="45" cy="45" r="3" fill="#4CAF50"/>
+                                <text x="60" y="63" text-anchor="middle" font-size="12" fill="white" font-weight="bold">DC</text>
+                                <path d="M 30 80 Q 60 85 90 80" stroke="#FF9800" stroke-width="3" fill="none"/>
+                                <text x="60" y="100" text-anchor="middle" font-size="10" fill="#333">AC Power</text>
+                            </svg>
+                        </div>
+                        <div class="step-content">
+                            <h3>Power Conversion</h3>
+                            <p>Convert irradiance to <strong>DC power</strong> using module models, then to <strong>AC power</strong> through inverter models.</p>
+                            <div class="step-details">
+                                <span class="detail-tag">Models:</span> CEC, SAPM, PVWatts
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chain-summary">
+                    <div class="summary-card">
+                        <h3>🎯 Key Benefits</h3>
+                        <ul>
+                            <li><strong>Modular Design:</strong> Use individual functions or complete chains</li>
+                            <li><strong>Model Choice:</strong> Multiple validated algorithms for each step</li>
+                            <li><strong>Real-world Accuracy:</strong> Accounts for all major loss mechanisms</li>
+                            <li><strong>Flexible Input:</strong> Works with various weather data sources</li>
+                        </ul>
+                    </div>
+                    <div class="summary-card">
+                        <h3>📊 Applications</h3>
+                        <ul>
+                            <li>Energy yield assessment</li>
+                            <li>Financial modeling</li>
+                            <li>Performance monitoring</li>
+                            <li>Research & development</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <a href="#page-4" class="nav-button"><i class="fas fa-arrow-left"></i> Why pvlib?</a>
+                <a href="#page-7" class="nav-button">Paradigms <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Page 7: Modeling Paradigms -->
+        <section class="page" id="page-7">
+            <div class="page-header"><h2>Flexible Modeling Paradigms</h2></div>
+            <div class="card">
+                <div class="code-tabs">
+                    <button class="active" data-target="procedural">Procedural</button>
+                    <button data-target="oo">Object-Oriented</button>
+                    <button data-target="modelchain">ModelChain</button>
+                </div>
+                <div class="code-content-container">
+                    <div id="procedural" class="code-content active">
+                        <h4>🔧 Procedural Approach</h4>
+                        <p><em>Maximum control over each calculation step</em></p>
+                        <pre><code class="python">import pvlib
+import pandas as pd
+
+# Step-by-step solar calculations
+times = pd.date_range('2025-01-01', periods=24, freq='H', tz='Australia/Sydney')
+lat, lon = -33.8688, 151.2093  # Sydney coordinates
+
+# 1. Solar position
+solpos = pvlib.solarposition.get_solarposition(times, lat, lon)
+
+# 2. Irradiance components  
+dni_extra = pvlib.irradiance.get_extra_radiation(times)
+airmass = pvlib.atmosphere.get_relative_airmass(solpos['apparent_zenith'])
+
+# 3. Plane-of-array irradiance
+total_irrad = pvlib.irradiance.get_total_irradiance(
+    surface_tilt=30, surface_azimuth=180,
+    solar_zenith=solpos['apparent_zenith'], 
+    solar_azimuth=solpos['azimuth'],
+    dni=900, ghi=1000, dhi=100  # Example values
+)
+
+# 4. Cell temperature
+cell_temp = pvlib.temperature.sapm_cell(
+    poa_global=total_irrad['poa_global'],
+    temp_air=25, wind_speed=1,
+    a=-3.56, b=-0.075, deltaT=3  # SAPM parameters
+)
+
+print(f"Peak POA irradiance: {total_irrad['poa_global'].max():.1f} W/m²")</code></pre>
+                    </div>
+                    <div id="oo" class="code-content">
+                        <h4>🏗️ Object-Oriented Approach</h4>
+                        <p><em>Organize system components as objects</em></p>
+                        <pre><code class="python">from pvlib.location import Location
+from pvlib.pvsystem import PVSystem, FixedMount, Array
+from pvlib.temperature import TEMPERATURE_MODEL_PARAMETERS
+
+# Define location object
+location = Location(
+    latitude=-33.8688, longitude=151.2093,  # Sydney
+    name='Sydney', altitude=58, tz='Australia/Sydney'
+)
+
+# Define system components
+temperature_params = TEMPERATURE_MODEL_PARAMETERS['sapm']['open_rack_glass_glass']
+
+mount = FixedMount(surface_tilt=30, surface_azimuth=180)
+array = Array(
+    mount=mount,
+    module_parameters={'pdc0': 320, 'gamma_pdc': -0.004},
+    temperature_model_parameters=temperature_params,
+    modules_per_string=10, strings=4
+)
+
+system = PVSystem(
+    arrays=[array],
+    inverter_parameters={'pdc0': 12000, 'eta_inv_nom': 0.96}
+)
+
+# Use object methods
+clearsky = location.get_clearsky(times)
+solpos = location.get_solarposition(times)
+
+# Calculate system performance
+dc_power = system.pvwatts_dc(
+    g_poa_effective=clearsky['ghi'] * 0.9,  # Simplified
+    temp_cell=25
+)
+
+print(f"System configuration: {system.num_arrays} array(s)")
+print(f"Total module capacity: {array.module_parameters['pdc0'] * 40} W")</code></pre>
+                    </div>
+                    <div id="modelchain" class="code-content">
+                        <h4>⚡ ModelChain Approach</h4>
+                        <p><em>Complete simulation with one function call</em></p>
+                        <pre><code class="python">from pvlib.modelchain import ModelChain
+from pvlib.pvsystem import PVSystem, FixedMount, Array
+from pvlib.location import Location
+import pandas as pd
+
+# Quick setup with ModelChain
+location = Location(-33.8688, 151.2093, tz='Australia/Sydney')  # Sydney
+
+# Define system
+array = Array(
+    mount=FixedMount(surface_tilt=30, surface_azimuth=180),
+    module_parameters={'pdc0': 320, 'gamma_pdc': -0.004},
+    temperature_model_parameters={'a': -3.56, 'b': -0.075, 'deltaT': 3}
+)
+
+system = PVSystem(
+    arrays=[array],
+    inverter_parameters={'pdc0': 12000, 'eta_inv_nom': 0.96}
+)
+
+# Create ModelChain and run simulation
+mc = ModelChain(system, location, aoi_model='physical', spectral_model='no_loss')
+
+# Sample weather data
+weather = pd.DataFrame({
+    'ghi': [0, 200, 600, 1000, 800, 400, 100, 0],
+    'dni': [0, 300, 800, 900, 700, 500, 200, 0], 
+    'dhi': [0, 100, 150, 100, 200, 150, 50, 0],
+    'temp_air': [18, 20, 24, 28, 26, 22, 19, 17],
+    'wind_speed': [2, 3, 2, 1, 2, 3, 2, 2]
+}, index=pd.date_range('2025-08-20 06:00', periods=8, freq='2H', tz='Australia/Sydney'))
+
+# Run complete simulation
+mc.run_model(weather)
+
+# Access results
+print(f"Daily AC energy: {mc.results.ac.sum()/1000:.1f} kWh")
+print(f"Peak AC power: {mc.results.ac.max():.0f} W")
+print(f"Peak cell temperature: {mc.results.cell_temperature.max():.1f}°C")
+
+# Results are automatically stored in mc.results with:
+# - ac: AC power output
+# - dc: DC power output  
+# - cell_temperature: Cell temperatures
+# - aoi: Angle of incidence
+# - And much more...</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <a href="#page-5" class="nav-button"><i class="fas fa-arrow-left"></i> Features</a>
+                <a href="#page-9" class="nav-button">Live Demo <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Page 9: Live Demo -->
+        <section class="page" id="page-9">
+            <div class="page-header"><h2>🚀 Live Demo: Building Your First PV Model</h2></div>
+            <div class="demo-container">
+                <div class="demo-sidebar">
+                    <div class="demo-controls">
+                        <h3>🎛️ Simulation Parameters</h3>
+                        
+                        <div class="parameter-group">
+                            <h4>📍 Location</h4>
+                            <select id="location-select">
+                                <option value="sydney">Sydney, NSW (-33.87°, 151.21°)</option>
+                                <option value="melbourne">Melbourne, VIC (-37.81°, 144.96°)</option>
+                                <option value="brisbane">Brisbane, QLD (-27.47°, 153.03°)</option>
+                                <option value="perth">Perth, WA (-31.95°, 115.86°)</option>
+                                <option value="adelaide">Adelaide, SA (-34.93°, 138.60°)</option>
+                            </select>
+                        </div>
+
+                        <div class="parameter-group">
+                            <h4>🔧 System Configuration</h4>
+                            <div class="param-item">
+                                <label>Tilt Angle: <span id="tilt-display">30°</span></label>
+                                <input type="range" min="0" max="60" value="30" id="tilt-slider-demo" class="param-slider">
+                            </div>
+                            <div class="param-item">
+                                <label>System Size: <span id="size-display">5.0 kW</span></label>
+                                <input type="range" min="1" max="10" value="5" step="0.5" id="size-slider" class="param-slider">
+                            </div>
+                        </div>
+
+                        <div class="parameter-group">
+                            <h4>📊 Results Summary</h4>
+                            <div class="result-item">
+                                <span>Peak Power:</span>
+                                <span id="peak-power-result">-- kW</span>
+                            </div>
+                            <div class="result-item">
+                                <span>Daily Energy:</span>
+                                <span id="daily-energy-result">-- kWh</span>
+                            </div>
+                            <div class="result-item">
+                                <span>Capacity Factor:</span>
+                                <span id="capacity-factor-result">-- %</span>
+                            </div>
+                        </div>
+                        
+                        <button id="run-simulation-btn" class="demo-run-button">⚡ Run Simulation</button>
+                    </div>
+                </div>
+                <div class="demo-main">
+                    <div class="demo-code-section">
+                        <div class="code-explanation">
+                            <h4>🐍 Complete PV System Simulation</h4>
+                        </div>
+                        
+                        <div class="demo-code-display large-code-display">
+                            <div class="code-header">
+                                <span class="code-title">Complete PV Simulation Code</span>
+                                <a href="https://colab.research.google.com/github/PV-Tutorials/2024_pvlib_PVPMC-Copenhagen/blob/main/pvlib-introduction.ipynb" target="_blank" class="colab-button">
+                                    <i class="fab fa-google"></i> Open in Google Colab
+                                </a>
+                            </div>
+                            <pre id="demo-code"><code class="python"># Complete PV System Simulation with pvlib
+import pvlib
+import pandas as pd
+import numpy as np
+
+# 1. Define location (Sydney, Australia)
+location = pvlib.location.Location(
+    latitude=-33.8688, longitude=151.2093,
+    name='Sydney', altitude=58, tz='Australia/Sydney'
+)
+
+# 2. Create time series for one day
+times = pd.date_range('2025-08-20 06:00', '2025-08-20 18:00', 
+                     freq='30min', tz='Australia/Sydney')
+
+# 3. Get clear sky irradiance data
+clearsky = location.get_clearsky(times)
+
+# 4. Define PV system parameters
+system_size_kw = 5.0  # System size in kW
+tilt_angle = 30       # Panel tilt angle in degrees
+
+# Module parameters (typical silicon PV)
+module_params = {
+    'pdc0': 320,           # DC power at STC (W)
+    'gamma_pdc': -0.004,   # Power temperature coefficient (/°C)
+}
+
+# 5. Create PV system
+from pvlib.pvsystem import PVSystem, FixedMount, Array
+from pvlib.modelchain import ModelChain
+
+mount = FixedMount(surface_tilt=tilt_angle, surface_azimuth=180)
+array = Array(
+    mount=mount,
+    module_parameters=module_params,
+    temperature_model_parameters={'a': -3.56, 'b': -0.075, 'deltaT': 3}
+)
+
+# Calculate number of modules for desired system size
+modules_needed = int(system_size_kw * 1000 / module_params['pdc0'])
+
+system = PVSystem(
+    arrays=[array],
+    inverter_parameters={'pdc0': system_size_kw * 1000, 'eta_inv_nom': 0.96}
+)
+
+# 6. Run simulation
+mc = ModelChain(system, location, 
+                aoi_model='physical', spectral_model='no_loss')
+
+# Create weather data with temperature
+weather = clearsky.copy()
+weather['temp_air'] = 25 + 5 * np.sin((times.hour - 12) / 6 * np.pi)
+weather['wind_speed'] = 2.0
+
+# Run the simulation
+mc.run_model(weather)
+
+# 7. Extract and display results
+ac_power_kw = mc.results.ac / 1000  # Convert to kW
+daily_energy = ac_power_kw.sum() * 0.5  # kWh (30min intervals)
+peak_power = ac_power_kw.max()
+capacity_factor = (daily_energy / (system_size_kw * 12)) * 100  # 12h day
+
+print(f"System Size: {system_size_kw} kW")
+print(f"Peak Power: {peak_power:.2f} kW")
+print(f"Daily Energy: {daily_energy:.2f} kWh")
+print(f"Capacity Factor: {capacity_factor:.1f}%")</code></pre>
+                        </div>
+                    </div>
+                    <div class="demo-chart-section">
+                        <div class="chart-tabs">
+                            <button class="chart-tab active" data-chart="power">AC Power (kW)</button>
+                            <button class="chart-tab" data-chart="irradiance">Solar Irradiance (W/m²)</button>
+                            <button class="chart-tab" data-chart="efficiency">System Efficiency (%)</button>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="demo-chart"></canvas>
+                        </div>
+                        <div class="chart-insights">
+                            <div id="power-insights" class="insights scrollable-insights active">
+                                <h4>⚡ AC Power Analysis</h4>
+                                <ul>
+                                    <li><strong>Bell Curve Pattern:</strong> Power follows sun's daily path</li>
+                                    <li><strong>Temperature Impact:</strong> Higher heat reduces output</li>
+                                    <li><strong>Inverter Role:</strong> Converts DC to AC, tracks maximum power</li>
+                                    <li><strong>Daily Energy:</strong> Area under power curve</li>
+                                    <li><strong>Peak Time:</strong> Usually 1-2 hours after solar noon</li>
+                                    <li><strong>Grid Connection:</strong> AC matches grid frequency and voltage</li>
+                                </ul>
+                            </div>
+                            <div id="irradiance-insights" class="insights scrollable-insights">
+                                <h4>☀️ Solar Irradiance Analysis</h4>
+                                <ul>
+                                    <li><strong>GHI vs POA:</strong> Horizontal vs tilted panel irradiance</li>
+                                    <li><strong>Peak at Solar Noon:</strong> Maximum around 12:00-13:00</li>
+                                    <li><strong>Direct + Diffuse:</strong> Sunlight and sky radiation</li>
+                                    <li><strong>Weather Effects:</strong> Clouds reduce irradiance</li>
+                                    <li><strong>Solar Angles:</strong> Sun position affects intensity</li>
+                                    <li><strong>Seasonal Variation:</strong> Summer peaks higher than winter</li>
+                                </ul>
+                            </div>
+                            <div id="efficiency-insights" class="insights scrollable-insights">
+                                <h4>📊 System Efficiency Analysis</h4>
+                                <ul>
+                                    <li><strong>Inverter Efficiency:</strong> ~96% DC to AC conversion</li>
+                                    <li><strong>Module Efficiency:</strong> Silicon cells 15-22%</li>
+                                    <li><strong>Temperature Loss:</strong> Heat reduces efficiency</li>
+                                    <li><strong>System Losses:</strong> Shading, soiling, wiring</li>
+                                    <li><strong>MPPT Tracking:</strong> Optimizes power point continuously</li>
+                                    <li><strong>Performance Ratio:</strong> Real vs theoretical output</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <a href="#page-7" class="nav-button"><i class="fas fa-arrow-left"></i> Paradigms</a>
+                <a href="#page-10" class="nav-button">3D Interactive <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Page 10: 3D Interactive PV System -->
+        <section class="page" id="page-10">
+            <div class="page-header"><h2>🎮 3D PV System Model</h2></div>
+            <div class="interactive-3d-container">
+                <div class="controls-panel">
+                    <h3>🎛️ System Controls</h3>
+                    
+                    <div class="control-group">
+                        <h4>📍 Location</h4>
+                        <select id="location-3d-select">
+                            <option value="sydney">Sydney, NSW (-33.87°, 151.21°)</option>
+                            <option value="melbourne">Melbourne, VIC (-37.81°, 144.96°)</option>
+                            <option value="brisbane">Brisbane, QLD (-27.47°, 153.03°)</option>
+                            <option value="perth">Perth, WA (-31.95°, 115.86°)</option>
+                            <option value="adelaide">Adelaide, SA (-34.93°, 138.60°)</option>
+                            <option value="darwin">Darwin, NT (-12.46°, 130.84°)</option>
+                            <option value="hobart">Hobart, TAS (-42.88°, 147.33°)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <h4>🔧 Panel Orientation</h4>
+                        <label for="tilt-3d-slider">Tilt Angle: <span id="tilt-3d-value">30</span>°</label>
+                        <input type="range" min="0" max="90" value="30" id="tilt-3d-slider" class="form-range">
+                        
+                        <label for="azimuth-3d-slider">Azimuth: <span id="azimuth-3d-value">180</span>° (South)</label>
+                        <input type="range" min="0" max="360" value="180" id="azimuth-3d-slider" class="form-range">
+                    </div>
+
+                    <div class="control-group">
+                        <h4>📏 System Size</h4>
+                        <label for="array-width-slider">Array Width: <span id="array-width-value">4</span> panels</label>
+                        <input type="range" min="2" max="8" value="4" id="array-width-slider" class="form-range">
+                        
+                        <label for="array-height-slider">Array Height: <span id="array-height-value">3</span> panels</label>
+                        <input type="range" min="1" max="6" value="3" id="array-height-slider" class="form-range">
+                    </div>
+
+                    <div class="control-group">
+                        <h4>☀️ Sun Position</h4>
+                        <label for="time-slider">Time of Day: <span id="time-value">12:00</span></label>
+                        <input type="range" min="6" max="18" value="12" id="time-slider" class="form-range">
+                        
+                        <label for="date-slider">Day of Year: <span id="date-value">172</span> (Jun 21)</label>
+                        <input type="range" min="1" max="365" value="172" id="date-slider" class="form-range">
+                    </div>
+
+                    <div class="system-info">
+                        <h4>📊 System Information</h4>
+                        <div class="info-item">
+                            <span>Total Panels:</span>
+                            <span id="total-panels">12</span>
+                        </div>
+                        <div class="info-item">
+                            <span>System Capacity:</span>
+                            <span id="system-capacity">3.84 kW</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Sun Elevation:</span>
+                            <span id="sun-elevation">45.0°</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Sun Azimuth:</span>
+                            <span id="sun-azimuth">0.0°</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Angle of Incidence:</span>
+                            <span id="aoi-value">15.0°</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="visualization-panel">
+                    <div class="view-controls">
+                        <button id="reset-view" class="view-btn">🔄 Reset View</button>
+                        <button id="top-view" class="view-btn">📐 Top View</button>
+                        <button id="side-view" class="view-btn">📏 Side View</button>
+                        <button id="sun-view" class="view-btn">☀️ Sun View</button>
+                    </div>
+                    <div id="threejs-container" class="threejs-container"></div>
+                    <div class="view-info">
+                        <p>🖱️ <strong>Mouse Controls:</strong> Left-click + drag to rotate, wheel to zoom, right-click + drag to pan</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="generation-profile">
+                <h3>⚡ Live Generation Profile</h3>
+                <div class="profile-container">
+                    <canvas id="generation-profile-chart"></canvas>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Daily Energy:</span>
+                        <span class="stat-value" id="daily-energy">28.5 kWh</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Peak Power:</span>
+                        <span class="stat-value" id="peak-power">3.2 kW</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Capacity Factor:</span>
+                        <span class="stat-value" id="capacity-factor">18.7%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Annual Yield:</span>
+                        <span class="stat-value" id="annual-yield">5,847 kWh</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <a href="#page-9" class="nav-button"><i class="fas fa-arrow-left"></i> Live Demo</a>
+                <a href="#page-12" class="nav-button">Community <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Page 12: Community -->
+        <section class="page" id="page-12">
+            <div class="page-header"><h2>Join the Community</h2></div>
+            <div class="community-grid">
+                <div class="community-section">
+                    <h3>📚 Documentation & Learning</h3>
+                    <div class="community-links">
+                        <a href="https://pvlib-python.readthedocs.io" target="_blank" class="community-link">
+                            <i class="fas fa-book"></i>
+                            <div>
+                                <h4>Official Documentation</h4>
+                                <p>Comprehensive guides, API reference, and examples</p>
+                            </div>
+                        </a>
+                        <a href="https://pvlib-python.readthedocs.io/en/stable/gallery/index.html" target="_blank" class="community-link">
+                            <i class="fas fa-images"></i>
+                            <div>
+                                <h4>Example Gallery</h4>
+                                <p>Code examples and tutorials for common tasks</p>
+                            </div>
+                        </a>
+                        <a href="https://github.com/pvlib/pvlib-python/tree/main/docs/tutorials" target="_blank" class="community-link">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div>
+                                <h4>Tutorials</h4>
+                                <p>Step-by-step learning materials and workshops</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="community-section">
+                    <h3>💬 Get Help & Discuss</h3>
+                    <div class="community-links">
+                        <a href="https://github.com/pvlib/pvlib-python/discussions" target="_blank" class="community-link">
+                            <i class="fab fa-github"></i>
+                            <div>
+                                <h4>GitHub Discussions</h4>
+                                <p>Ask questions and share ideas with the community</p>
+                            </div>
+                        </a>
+                        <a href="https://stackoverflow.com/questions/tagged/pvlib" target="_blank" class="community-link">
+                            <i class="fab fa-stack-overflow"></i>
+                            <div>
+                                <h4>Stack Overflow</h4>
+                                <p>Technical Q&A with the #pvlib tag</p>
+                            </div>
+                        </a>
+                        <a href="https://discourse.pvlib.org/" target="_blank" class="community-link">
+                            <i class="fas fa-comments"></i>
+                            <div>
+                                <h4>Discourse Forum</h4>
+                                <p>Community discussions and announcements</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="community-section">
+                    <h3>🛠️ Development & Contribution</h3>
+                    <div class="community-links">
+                        <a href="https://github.com/pvlib/pvlib-python" target="_blank" class="community-link">
+                            <i class="fab fa-github"></i>
+                            <div>
+                                <h4>Source Code</h4>
+                                <p>Main repository, issues, and pull requests</p>
+                            </div>
+                        </a>
+                        <a href="https://github.com/pvlib/pvlib-python/blob/main/CONTRIBUTING.md" target="_blank" class="community-link">
+                            <i class="fas fa-code-branch"></i>
+                            <div>
+                                <h4>Contributing Guide</h4>
+                                <p>How to contribute code, docs, and bug reports</p>
+                            </div>
+                        </a>
+                        <a href="https://github.com/pvlib/pvlib-python/wiki" target="_blank" class="community-link">
+                            <i class="fas fa-wiki-w"></i>
+                            <div>
+                                <h4>Developer Wiki</h4>
+                                <p>Development guidelines and project information</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="community-section">
+                    <h3>🔗 Related Resources</h3>
+                    <div class="community-links">
+                        <a href="https://pypi.org/project/pvlib/" target="_blank" class="community-link">
+                            <i class="fab fa-python"></i>
+                            <div>
+                                <h4>PyPI Package</h4>
+                                <p>Install pvlib with pip install pvlib</p>
+                            </div>
+                        </a>
+                        <a href="https://joss.theoj.org/papers/10.21105/joss.00884" target="_blank" class="community-link">
+                            <i class="fas fa-file-alt"></i>
+                            <div>
+                                <h4>JOSS Paper</h4>
+                                <p>Academic paper describing pvlib-python</p>
+                            </div>
+                        </a>
+                        <a href="https://numfocus.org/sponsored-projects" target="_blank" class="community-link">
+                            <i class="fas fa-heart"></i>
+                            <div>
+                                <h4>NumFOCUS Sponsored</h4>
+                                <p>Part of the NumFOCUS ecosystem</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="community-stats">
+                <h3>📈 Community Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Contributors</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2M+</div>
+                        <div class="stat-label">Downloads/month</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">GitHub Stars</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Years Active</div>
+                    </div>
+                </div>
+            </div>
+            <div class="navigation">
+                <a href="#page-10" class="nav-button"><i class="fas fa-arrow-left"></i> 3D Interactive</a>
+                <a href="#page-15" class="nav-button">Q&A <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Page 15: Q&A -->
+        <section class="page" id="page-15">
+            <div class="page-header"><h2>Questions?</h2></div>
+            <div id="globe-container-qa" style="height: 500px; width: 100%;"></div>
+            <div class="navigation">
+                <a href="#page-12" class="nav-button"><i class="fas fa-arrow-left"></i> Community</a>
+                <div></div>
+            </div>
+        </section>
+
+        <div class="footer">
+            <p>Presentation created with ❤️ and pvlib for SPREE UNSW | August 20, 2025</p>
+        </div>
+    </div>
+
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+</body>
+</html>

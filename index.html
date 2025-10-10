@@ -244,12 +244,13 @@
                                         <rect x="60" y="65" width="80" height="10" fill="#1976d2" stroke="#0d47a1"/>
                                         <text x="100" y="50" text-anchor="middle" font-size="8" fill="#333">Optimal Tilt</text>
                                     </g>
-                                    <path d="M 50 30 L 150 30" stroke="#ffc107" stroke-width="3" marker-end="url(#arrowhead)"/>
-                                    <text x="100" y="25" text-anchor="middle" font-size="10" fill="#ff9800">Sun Rays</text>
+                                    <!-- Sun rays perpendicular to the tilted panel -->
+                                    <path d="M 50 30 L 150 30" stroke="#ff9800" stroke-width="3" marker-end="url(#arrowhead-orange)" transform="rotate(30 100 30)"/>
+                                    <text x="100" y="15" text-anchor="middle" font-size="10" fill="#ff9800">Sun Rays</text>
                                 </g>
                                 <defs>
-                                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-                                        <polygon points="0 0, 10 3.5, 0 7" fill="#ffc107"/>
+                                    <marker id="arrowhead-orange" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+                                        <polygon points="0 0, 10 3.5, 0 7" fill="#ff9800"/>
                                     </marker>
                                 </defs>
                             </svg>

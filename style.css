@@ -1950,6 +1950,27 @@ pre code.hljs {
     color: var(--accent-color);
 }
 
+/* Page 9 - Live Demo layout refinements */
+#page-9 .page-header {
+    margin-bottom: 40px; /* lift subsequent content a bit closer to the title */
+}
+
+#page-9 .demo-container {
+    gap: 28px;              /* a bit more space between sidebar and main area */
+    margin-top: 8px;        /* subtle lift under the header */
+}
+
+#page-9 .demo-sidebar,
+#page-9 .demo-code-section,
+#page-9 .demo-chart-section {
+    padding: 30px;          /* more breathing room inside each box */
+    overflow: visible;      /* prevent hover shadows from being clipped */
+}
+
+#page-9 .demo-run-button {
+    margin-top: 4px;        /* avoid button shadow touching container edge */
+}
+
 /* Base List Styling */
 ul, ol {
     padding-left: 24px;

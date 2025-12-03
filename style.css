@@ -1623,13 +1623,14 @@ pre code.hljs {
 
 .chart-tabs {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-wrap: nowrap;
+    gap: 8px;
     margin-bottom: 20px;
+    justify-content: flex-start;
 }
 
 .chart-tab {
-    padding: 10px 16px;
+    padding: 10px 14px;
     border: 2px solid var(--bg-warm-gray);
     background: var(--bg-cream-light);
     color: var(--text-dark);
@@ -1637,9 +1638,11 @@ pre code.hljs {
     cursor: pointer;
     transition: var(--transition-smooth);
     font-weight: 500;
-    font-size: 14px;
+    font-size: 13px;
     white-space: nowrap;
-    flex-shrink: 0;
+    flex: 1 1 auto;
+    text-align: center;
+    min-width: 0;
 }
 
 .chart-tab:hover {

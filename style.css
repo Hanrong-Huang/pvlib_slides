@@ -1174,11 +1174,12 @@ pre code.hljs {
     color: var(--primary-color);
     margin-top: 0;
     margin-bottom: 24px;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 700;
     padding-bottom: 12px;
     border-bottom: 2px solid var(--bg-warm-gray);
-    white-space: nowrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .community-links {

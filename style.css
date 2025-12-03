@@ -94,7 +94,11 @@ body {
     font-weight: 500;
     position: relative;
     transition: var(--transition-smooth);
-    padding: 8px 0;
+    padding: 0 0 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 72px; /* match nav bar height so text sits in the middle */
 }
 
 .nav-links a:hover {
@@ -106,7 +110,7 @@ body {
     position: absolute;
     width: 0;
     height: 2px;
-    bottom: 0;
+    bottom: 10px; /* lift underline slightly so hover effect isn't cut off */
     left: 50%;
     background: var(--coral-accent);
     transition: var(--transition-smooth);

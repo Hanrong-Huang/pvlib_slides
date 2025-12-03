@@ -1485,7 +1485,7 @@ pre code.hljs {
 
 .demo-main {
     display: grid;
-    grid-template-columns: 1.2fr 1.1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 24px;
     height: calc(100vh - 200px);
     min-height: 650px;
@@ -1501,6 +1501,7 @@ pre code.hljs {
     display: flex;
     flex-direction: column;
     border: 1px solid rgba(0, 0, 0, 0.04);
+    min-width: 0;
 }
 
 .code-explanation {
@@ -1620,21 +1621,22 @@ pre code.hljs {
     min-height: 700px;
     overflow: visible;
     border: 1px solid rgba(0, 0, 0, 0.04);
+    min-width: 0;
 }
 
 .chart-tabs {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-wrap: nowrap;
+    gap: 8px;
     margin-bottom: 20px;
-    overflow: visible;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
 }
 
 .chart-tab {
-    display: inline-block;
-    width: auto;
-    padding: 10px 16px;
+    padding: 10px 12px;
     border: 2px solid var(--bg-warm-gray);
     background: var(--bg-cream-light);
     color: var(--text-dark);
@@ -1642,10 +1644,11 @@ pre code.hljs {
     cursor: pointer;
     transition: var(--transition-smooth);
     font-weight: 500;
-    font-size: 14px;
+    font-size: 13px;
     text-align: center;
     box-sizing: border-box;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .chart-tab:hover {

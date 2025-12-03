@@ -1175,6 +1175,7 @@ pre code.hljs {
     font-weight: 700;
     padding-bottom: 12px;
     border-bottom: 2px solid var(--bg-warm-gray);
+    white-space: nowrap;
 }
 
 .community-links {
@@ -1271,9 +1272,8 @@ pre code.hljs {
 .stats-grid .stat-card:nth-child(3) { background: var(--gradient-secondary); }
 .stats-grid .stat-card:nth-child(4) { background: linear-gradient(135deg, var(--coral-accent) 0%, var(--coral-accent-hover) 100%); }
 
-.stats-grid .stat-card:nth-child(1) .stat-label,
-.stats-grid .stat-card:nth-child(2) .stat-label {
-    color: #1a1a1a;
+.stats-grid .stat-card .stat-label {
+    color: white;
     opacity: 1;
 }
 

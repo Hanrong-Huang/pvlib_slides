@@ -1620,7 +1620,8 @@ pre code.hljs {
 .chart-tab {
     padding: 10px 16px;
     border: 2px solid var(--bg-warm-gray);
-    background: white;
+    background: var(--bg-cream-light);
+    color: var(--text-dark);
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition-smooth);

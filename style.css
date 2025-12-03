@@ -1628,7 +1628,7 @@ pre code.hljs {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    gap: 8px;
+    gap: 14px;
     margin-bottom: 20px;
     width: 100%;
     overflow-x: auto;
@@ -1636,7 +1636,7 @@ pre code.hljs {
 }
 
 .chart-tab {
-    padding: 10px 12px;
+    padding: 12px 18px;
     border: 2px solid var(--bg-warm-gray);
     background: var(--bg-cream-light);
     color: var(--text-dark);

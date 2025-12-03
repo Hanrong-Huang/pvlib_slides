@@ -1302,7 +1302,7 @@ pre code.hljs {
     height: calc(100vh - 180px);
     min-height: 700px;
     max-height: 850px;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .demo-sidebar {
@@ -1489,6 +1489,7 @@ pre code.hljs {
     gap: 24px;
     height: calc(100vh - 200px);
     min-height: 650px;
+    overflow: visible;
 }
 
 .demo-code-section {
@@ -1617,21 +1618,22 @@ pre code.hljs {
     flex-direction: column;
     height: 100%;
     min-height: 700px;
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .chart-tabs {
-    display: inline-flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 20px;
+    overflow: visible;
 }
 
 .chart-tab {
-    display: inline-block !important;
-    width: auto !important;
+    display: inline-block;
+    width: auto;
     padding: 10px 16px;
     border: 2px solid var(--bg-warm-gray);
     background: var(--bg-cream-light);
@@ -1643,7 +1645,7 @@ pre code.hljs {
     font-size: 14px;
     text-align: center;
     box-sizing: border-box;
-    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .chart-tab:hover {

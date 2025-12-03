@@ -1232,15 +1232,16 @@ pre code.hljs {
 
 /* Community Stats */
 .community-stats {
-    background: var(--text-dark);
+    background: var(--bg-cream-light);
     border-radius: var(--border-radius);
     padding: 40px 28px;
-    box-shadow: var(--shadow-medium);
+    box-shadow: var(--shadow-soft);
     text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .community-stats h3 {
-    color: white;
+    color: var(--text-dark);
     margin-top: 0;
     margin-bottom: 32px;
     font-size: 1.7rem;
@@ -1612,19 +1613,23 @@ pre code.hljs {
 
 .chart-tabs {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 20px;
 }
 
 .chart-tab {
-    padding: 10px 20px;
+    padding: 10px 16px;
     border: 2px solid var(--bg-warm-gray);
-    background: white;
+    background: var(--bg-cream-light);
+    color: var(--text-dark);
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition-smooth);
     font-weight: 500;
     font-size: 14px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .chart-tab:hover {

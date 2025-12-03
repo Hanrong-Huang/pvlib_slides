@@ -1622,15 +1622,16 @@ pre code.hljs {
 }
 
 .chart-tabs {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
     margin-bottom: 20px;
-    justify-content: flex-start;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .chart-tab {
-    padding: 10px 14px;
+    padding: 12px 8px;
     border: 2px solid var(--bg-warm-gray);
     background: var(--bg-cream-light);
     color: var(--text-dark);
@@ -1640,9 +1641,10 @@ pre code.hljs {
     font-weight: 500;
     font-size: 13px;
     white-space: nowrap;
-    flex: 1 1 auto;
     text-align: center;
-    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .chart-tab:hover {

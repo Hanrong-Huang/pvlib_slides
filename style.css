@@ -1491,8 +1491,8 @@ pre code.hljs {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
-    height: calc(100vh - 200px);
-    min-height: 650px;
+    min-height: 700px;
+    max-height: calc(100vh - 200px);
     overflow: visible;
 }
 
@@ -1502,10 +1502,13 @@ pre code.hljs {
     padding: 24px;
     box-shadow: var(--shadow-soft);
     overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     border: 1px solid rgba(0, 0, 0, 0.04);
     min-width: 0;
+    max-height: calc(100vh - 200px);
+    min-height: 700px;
 }
 
 .code-explanation {
@@ -1538,13 +1541,16 @@ pre code.hljs {
     font-size: 0.8rem;
     line-height: 1.4;
     overflow-y: auto;
+    overflow-x: auto;
     flex: 1;
-    height: calc(100% - 80px);
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
 }
 
 .large-code-display {
-    height: calc(100% - 40px);
-    min-height: 500px;
+    min-height: 550px;
+    max-height: none;
 }
 
 .code-header {
@@ -1555,6 +1561,7 @@ pre code.hljs {
     padding: 12px 16px;
     border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
     border-bottom: 1px solid #404040;
+    flex-shrink: 0;
 }
 
 .colab-button {
@@ -1605,6 +1612,54 @@ pre code.hljs {
     padding: 16px;
     background: transparent;
     border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+    overflow: visible;
+    flex: 1;
+}
+
+.demo-code-display pre code {
+    display: block;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+/* Custom scrollbar for code display */
+.demo-code-display::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.demo-code-display::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 5px;
+}
+
+.demo-code-display::-webkit-scrollbar-thumb {
+    background: #4a4a4a;
+    border-radius: 5px;
+    transition: var(--transition-smooth);
+}
+
+.demo-code-display::-webkit-scrollbar-thumb:hover {
+    background: #5a5a5a;
+}
+
+.demo-code-section::-webkit-scrollbar {
+    width: 10px;
+}
+
+.demo-code-section::-webkit-scrollbar-track {
+    background: var(--bg-cream-light);
+    border-radius: 5px;
+}
+
+.demo-code-section::-webkit-scrollbar-thumb {
+    background: var(--bg-warm-gray-dark);
+    border-radius: 5px;
+    transition: var(--transition-smooth);
+}
+
+.demo-code-section::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
 }
 
 .demo-output {
@@ -1621,8 +1676,8 @@ pre code.hljs {
     box-shadow: var(--shadow-soft);
     display: flex;
     flex-direction: column;
-    height: 100%;
     min-height: 700px;
+    max-height: calc(100vh - 200px);
     overflow: visible;
     border: 1px solid rgba(0, 0, 0, 0.04);
     min-width: 0;
@@ -1958,13 +2013,26 @@ pre code.hljs {
 #page-9 .demo-container {
     gap: 28px;              /* a bit more space between sidebar and main area */
     margin-top: 8px;        /* subtle lift under the header */
+    min-height: 750px;      /* ensure enough vertical space */
 }
 
-#page-9 .demo-sidebar,
-#page-9 .demo-code-section,
+#page-9 .demo-sidebar {
+    padding: 30px;          /* more breathing room inside each box */
+    overflow-y: auto;       /* allow scrolling in sidebar */
+    overflow-x: hidden;
+}
+
+#page-9 .demo-code-section {
+    padding: 30px;          /* more breathing room inside each box */
+    overflow-y: auto;       /* allow scrolling for code */
+    overflow-x: hidden;
+    min-height: 750px;      /* ensure enough space for code content */
+}
+
 #page-9 .demo-chart-section {
     padding: 30px;          /* more breathing room inside each box */
     overflow: visible;      /* prevent hover shadows from being clipped */
+    min-height: 750px;      /* match code section height */
 }
 
 #page-9 .demo-run-button {
